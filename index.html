@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909"><meta name="description" content="Your personal movie and series library">
+<link rel="manifest" href="manifest.webmanifest">
+<title>NEXFLIX — Personal Cinema</title>
+<style>
+:root{color-scheme:dark;--bg:#090909;--panel:#171717;--muted:#aaa;--red:#e50914}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font:15px system-ui,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.top{height:62px;position:sticky;top:0;z-index:5;background:#101010ed;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #242424}.logo{font-size:25px;font-weight:950;color:var(--red);letter-spacing:-1.5px}.top button,.nav button{border:0;background:none;color:#ddd}.hero{min-height:300px;padding:25px 18px;display:flex;flex-direction:column;justify-content:end;background:linear-gradient(0deg,#090909 0%,#09090966 60%,#0002),radial-gradient(ellipse at 75% 25%,#6d1827,#171329 48%,#090909 85%)}.eyebrow{font-size:10px;letter-spacing:3px;color:#ddd}.hero h1{font-size:clamp(34px,9vw,52px);line-height:.98;margin:12px 0;font-weight:950}.hero p{color:#ddd;max-width:440px;font-size:13px;line-height:1.5}.actions{display:flex;gap:9px}.btn{border:0;border-radius:5px;padding:10px 16px;font-weight:750}.primary{background:#fff;color:#111}.secondary{background:#ffffff30;color:white}.section{padding:14px 14px 0}.section h2{font-size:17px;margin:5px 0 12px}.rail{display:flex;gap:11px;overflow-x:auto;padding:2px 1px 14px;scrollbar-width:thin}.poster{flex:0 0 124px;cursor:pointer}.art{height:172px;border-radius:7px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:32px;font-weight:900;overflow:hidden;background:linear-gradient(145deg,var(--c1),var(--c2));border:1px solid #ffffff12}.art span{font-size:13px;letter-spacing:1px;text-shadow:0 2px 5px #000}.poster b{display:block;font-size:12px;margin-top:6px}.poster small{font-size:10px;color:var(--muted)}.filters{display:flex;gap:8px;overflow:auto;padding:12px 14px;scrollbar-width:none}.filters button{white-space:nowrap;border:1px solid #444;border-radius:20px;background:#1c1c1c;color:#ddd;padding:7px 13px;font-size:12px}.filters button.active{background:var(--red);border-color:var(--red);color:white}.searchwrap{padding:12px 14px 0}.searchwrap input,.field{width:100%;background:#222;border:1px solid #444;border-radius:6px;color:white;padding:12px;outline:none}.nav{position:sticky;bottom:0;z-index:5;display:flex;justify-content:space-around;background:#111;border-top:1px solid #292929;padding:9px 2px max(9px,env(safe-area-inset-bottom))}.nav button{font-size:10px;color:#aaa;display:flex;flex-direction:column;align-items:center;gap:3px}.nav button strong{font-size:19px}.nav button.active{color:white}.page{display:none;min-height:70vh}.page.active{display:block}.empty{color:#aaa;font-size:13px;padding:18px 4px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:13px;padding:14px}.grid .poster{width:100%;min-width:0}.grid .art{height:165px}.modal{display:none;position:fixed;inset:0;background:#000d;z-index:20;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.dialog{width:min(460px,100%);max-height:90vh;overflow:auto;background:#1b1b1b;border-radius:12px;padding:16px}.dialoghead{display:flex;justify-content:space-between;align-items:center}.dialog p{color:#ccc;font-size:13px;line-height:1.6}.close{border:0;border-radius:50%;background:#333;padding:8px;color:white}.row{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.row .btn{flex:1}.field{margin:6px 0}.hint{font-size:11px;color:#999;line-height:1.5}.video{width:100%;max-height:55vh;background:#000;border-radius:8px}.listrow{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #333;padding:13px 2px;font-size:13px}.danger{background:#4b1717!important;color:white!important}.filelabel{display:block;padding:12px;border:1px dashed #777;border-radius:7px;text-align:center;margin:8px 0;color:#ddd}footer{text-align:center;padding:25px;color:#666;font-size:10px}
+</style>
+</head>
+<body>
+<header class="top"><div class="logo">NEXFLIX</div><button id="profileBtn">👤 <span id="who">PROFILE</span></button></header>
+<main>
+<section id="home" class="page active">
+ <div class="hero"><div class="eyebrow">YOUR PERSONAL CINEMA</div><h1>YOUR NEXT<br>OBSESSION.</h1><p>A private library for films, anime and series. Add videos you own or have permission to watch.</p><div class="actions"><button class="btn primary" id="browseBtn">▶ Browse library</button><button class="btn secondary" id="addHero">＋ Add content</button></div></div>
+ <div class="section"><h2>▶ Continue Watching</h2><div class="rail" id="continueRail"></div></div>
+ <div class="section"><h2>🔥 Popular Picks</h2><div class="rail" id="popularRail"></div></div>
+ <div class="section"><h2>🎌 Anime</h2><div class="rail" id="animeRail"></div></div>
+ <div class="section"><h2>🎬 Movies & Series</h2><div class="rail" id="moviesRail"></div></div>
+</section>
+<section id="discover" class="page">
+ <div class="section"><h2>Explore library</h2></div><div class="searchwrap"><input id="search" placeholder="Search titles or genres…"></div>
+ <div class="filters" id="filters"></div><div class="grid" id="catalog"></div>
+</section>
+<section id="mylist" class="page"><div class="section"><h2>♡ My List</h2><p class="hint">Titles you save appear here.</p></div><div class="grid" id="savedGrid"></div></section>
+<section id="studio" class="page">
+ <div class="section"><h2>＋ NEXFLIX Studio</h2><p class="hint">Add your own video files and organize your private library. Video files stay on this device in this browser.</p>
+ <form id="addForm">
+ <label class="hint">Title</label><input class="field" id="title" required maxlength="70" placeholder="e.g. My Movie">
+ <label class="hint">Type</label><select class="field" id="type"><option>Movie</option><option>Anime</option><option>TV Show</option><option>K-drama</option><option>Documentary</option></select>
+ <label class="hint">Genre</label><input class="field" id="genre" placeholder="Action, Fantasy…">
+ <label class="hint">Description</label><textarea class="field" id="description" rows="3" placeholder="A short description"></textarea>
+ <label class="hint">Poster image (optional)</label><input class="field" id="posterFile" type="file" accept="image/*">
+ <label class="hint">Video file (optional; MP4 works best)</label><input class="field" id="videoFile" type="file" accept="video/*">
+ <button class="btn" style="background:var(--red);color:white;width:100%" type="submit">Add to my library</button>
+ </form>
+ <div class="hint" style="margin-top:12px">Tip: large video files use your phone's storage. Keep the app's browser data intact or your saved library may be lost. Only add content you own or are authorised to use.</div>
+ <h2 style="margin-top:28px">Manage titles</h2><div id="manage"></div>
+ </div>
+</section>
+<section id="profile" class="page"><div class="section"><h2>Profile & settings</h2><div class="listrow">Profile name <span id="profileLabel"></span></div><button class="btn secondary" id="renameBtn">Change name</button><div class="listrow">Library storage <span id="storageLabel">On this device</span></div><div class="listrow">App version <span>1.0</span></div><p class="hint">This is a personal library app, not a subscription streaming service. It does not include copyrighted films or episodes.</p><button class="btn danger" id="clearBtn">Clear my library and watch history</button></div></section>
+</main>
+<nav class="nav">
+<button class="active" data-page="home"><strong>⌂</strong>Home</button><button data-page="discover"><strong>⌕</strong>Explore</button><button data-page="mylist"><strong>♡</strong>My List</button><button data-page="studio"><strong>＋</strong>Add</button><button data-page="profile"><strong>☻</strong>Profile</button>
+</nav>
+<div class="modal" id="detailModal"><div class="dialog"><div class="dialoghead"><b id="detailTitle">Title</b><button class="close" data-close>✕</button></div><div id="detailArt" class="art" style="height:190px;margin:12px 0"></div><div class="hint" id="detailMeta"></div><p id="detailDescription"></p><video id="player" class="video" controls playsinline style="display:none"></video><div class="row"><button class="btn primary" id="playBtn">▶ Play</button><button class="btn secondary" id="saveBtn">♡ My List</button></div><p class="hint" id="playHint"></p></div></div>
+<div class="modal" id="welcomeModal"><div class="dialog"><h2>Welcome to NEXFLIX</h2><p>What should we call you?</p><input class="field" id="nameInput" maxlength="22" placeholder="Your name"><button class="btn" style="background:var(--red);color:white;width:100%" id="startBtn">Let's go</button></div></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const colors=[['#55152c','#17142f'],['#17434b','#111c32'],['#68431c','#26182c'],['#283c67','#171326'],['#4c233d','#182b3b']];
+const seed=[
+{title:'The Big Buck Bunny',type:'Movie',genre:'Animation Comedy',description:'A cheerful animated short film about a gentle rabbit and his woodland adventures.',video:'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',tag:'Public sample video',emoji:'🐰'},
+{title:'Sintel',type:'Movie',genre:'Fantasy Adventure',description:'An independent fantasy short film created by the Blender community.',video:'https://media.w3.org/2010/05/sintel/trailer.mp4',tag:'Public sample trailer',emoji:'🐉'},
+{title:'Tears of Steel',type:'Movie',genre:'Sci-Fi Action',description:'A science-fiction short film from the Blender open movie project.',video:'https://media.w3.org/2010/05/video/movie_300.mp4',tag:'Public sample video',emoji:'🤖'},
+{title:'Cosmic Journey',type:'Anime',genre:'Sci-Fi Fantasy',description:'A placeholder in your catalogue. Add your own authorised video in NEXFLIX Studio.',emoji:'🌌'},
+{title:'The Last Kingdom',type:'TV Show',genre:'Historical Action',description:'A catalogue placeholder. Add a video file you have permission to use.',emoji:'⚔️'},
+{title:'Moonlit Days',type:'K-drama',genre:'Romance Drama',description:'A catalogue placeholder for your personal collection.',emoji:'🌙'},
+{title:'Wild Earth',type:'Documentary',genre:'Nature',description:'A catalogue placeholder for documentaries you own or can access legally.',emoji:'🌿'},
+{title:'Mystic Realms',type:'Anime',genre:'Fantasy Adventure',description:'A catalogue placeholder. Add an authorised video file to watch.',emoji:'✨'}
+];
+let items=[],saved=new Set(),history=[],active=null,profile=localStorage.getItem('nx_name')||'';
+const dbName='nexflix-private-library',storeName='videos';
+function db(){return new Promise((resolve,reject)=>{let r=indexedDB.open(dbName,1);r.onupgradeneeded=()=>r.result.createObjectStore(storeName);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function putVideo(id,file){let d=await db();return new Promise((res,rej)=>{let t=d.transaction(storeName,'readwrite');t.objectStore(storeName).put(file,id);t.oncomplete=res;t.onerror=()=>rej(t.error)})}
+async function getVideo(id){let d=await db();return new Promise((res,rej)=>{let r=d.transaction(storeName).objectStore(storeName).get(id);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function delVideo(id){let d=await db();return new Promise(res=>{let t=d.transaction(storeName,'readwrite');t.objectStore(storeName).delete(id);t.oncomplete=res})}
+function persist(){localStorage.setItem('nx_items',JSON.stringify(items));localStorage.setItem('nx_saved',JSON.stringify([...saved]));localStorage.setItem('nx_history',JSON.stringify(history))}
+function load(){try{items=JSON.parse(localStorage.getItem('nx_items'))||seed.map((x,i)=>({...x,id:'seed'+i}));saved=new Set(JSON.parse(localStorage.getItem('nx_saved'))||[]);history=JSON.parse(localStorage.getItem('nx_history'))||[]}catch{items=seed.map((x,i)=>({...x,id:'seed'+i}))}}
+function art(x){let c=colors[Math.abs([...x.title].reduce((a,b)=>a+b.charCodeAt(0),0))%colors.length];return `<div class="art" style="--c1:${c[0]};--c2:${c[1]}"><span>${x.emoji||'🎬'}<br>${esc(x.title.toUpperCase())}</span></div>`}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function card(x){return `<div class="poster" data-id="${esc(x.id)}">${x.poster?`<div class="art" style="background-image:url('${x.poster}');background-size:cover"><span></span></div>`:art(x)}<b>${esc(x.title)}</b><small>${esc(x.type)} · ${esc(x.genre||'')}</small></div>`}
+function rail(id,arr){$('#'+id).innerHTML=arr.length?arr.map(card).join(''):'<div class="empty">Nothing here yet.</div>'}
+function render(){rail('popularRail',items.slice(0,6));rail('animeRail',items.filter(x=>x.type==='Anime'));rail('moviesRail',items.filter(x=>['Movie','TV Show','K-drama','Documentary'].includes(x.type)));rail('continueRail',history.map(id=>items.find(x=>x.id===id)).filter(Boolean));renderCatalog();renderSaved();renderManage()}
+function renderCatalog(){let q=($('#search')?.value||'').toLowerCase(),f=$('#filters .active')?.dataset.filter||'All';let arr=items.filter(x=>(f==='All'||x.type===f||x.genre?.toLowerCase().includes(f.toLowerCase()))&&(`${x.title} ${x.genre} ${x.type}`).toLowerCase().includes(q));$('#catalog').innerHTML=arr.length?arr.map(card).join(''):'<div class="empty">No matching titles.</div>'}
+function renderSaved(){let arr=items.filter(x=>saved.has(x.id));$('#savedGrid').innerHTML=arr.length?arr.map(card).join(''):'<div class="empty">Your list is empty. Open a title and tap My List.</div>'}
+function renderManage(){$('#manage').innerHTML=items.map(x=>`<div class="listrow"><span>${esc(x.title)}</span><button class="close" data-delete="${esc(x.id)}">🗑</button></div>`).join('')||'<p class="empty">No titles.</p>'}
+function page(p){$$('.page').forEach(x=>x.classList.toggle('active',x.id===p));$$('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));if(p==='discover')renderCatalog();if(p==='mylist')renderSaved();if(p==='studio')renderManage()}
+function openItem(id){let x=items.find(z=>z.id===id);if(!x)return;active=x;$('#detailTitle').textContent=x.title;$('#detailArt').innerHTML=x.poster?`<img src="${x.poster}" style="width:100%;height:100%;object-fit:cover">`:art(x);$('#detailMeta').textContent=`${x.type} · ${x.genre||'Uncategorised'}${x.tag?' · '+x.tag:''}`;$('#detailDescription').textContent=x.description||'No description added.';$('#player').style.display='none';$('#player').pause();$('#player').removeAttribute('src');$('#playHint').textContent=x.video?'Video source available.':'No video added yet. Add your own video in Studio.';$('#playBtn').disabled=!(x.video||x.videoKey);$('#playBtn').style.opacity=$('#playBtn').disabled?.45:1;$('#saveBtn').textContent=saved.has(id)?'✓ Saved':'♡ My List';$('#detailModal').classList.add('show')}
+document.addEventListener('click',async e=>{let c=e.target.closest('[data-page]');if(c){page(c.dataset.page);return}let p=e.target.closest('[data-id]');if(p){openItem(p.dataset.id);return}let d=e.target.closest('[data-delete]');if(d){let id=d.dataset.delete;items=items.filter(x=>x.id!==id);saved.delete(id);history=history.filter(x=>x!==id);await delVideo(id);persist();render();return}if(e.target.matches('[data-close]'))$('#detailModal').classList.remove('show')});
+$$('.nav button').forEach(b=>b.addEventListener('click',()=>page(b.dataset.page)));
+$('#filters').innerHTML=['All','Movie','Anime','TV Show','K-drama','Documentary'].map((x,i)=>`<button data-filter="${x}" class="${i===0?'active':''}">${x}</button>`).join('');
+$('#filters').addEventListener('click',e=>{let b=e.target.closest('[data-filter]');if(!b)return;$$('#filters button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCatalog()});
+$('#search').addEventListener('input',renderCatalog);
+$('#playBtn').onclick=async()=>{if(!active)return;let url=active.video;if(active.videoKey){let f=await getVideo(active.videoKey);if(f)url=URL.createObjectURL(f)}if(!url)return;let v=$('#player');v.src=url;v.style.display='block';v.play().catch(()=>{});history=[active.id,...history.filter(x=>x!==active.id)].slice(0,20);persist();render();$('#playHint').textContent='Playback started. Your title is now in Continue Watching.'};
+$('#saveBtn').onclick=()=>{if(!active)return;if(saved.has(active.id))saved.delete(active.id);else saved.add(active.id);persist();$('#saveBtn').textContent=saved.has(active.id)?'✓ Saved':'♡ My List';renderSaved()};
+$('#addForm').addEventListener('submit',async e=>{e.preventDefault();let title=$('#title').value.trim(),file=$('#videoFile').files[0],poster=$('#posterFile').files[0];if(!title)return;let id='local_'+Date.now(),x={id,title,type:$('#type').value,genre:$('#genre').value.trim(),description:$('#description').value.trim(),emoji:'🎬'};if(file){x.videoKey=id;await putVideo(id,file)}if(poster){x.poster=await new Promise((res,rej)=>{let r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(poster)})}items.unshift(x);persist();e.target.reset();render();alert('Added to your NEXFLIX library!')});
+$('#browseBtn').onclick=()=>page('discover');$('#addHero').onclick=()=>page('studio');$('#profileBtn').onclick=()=>page('profile');
+$('#profileBtn').onclick=()=>page('profile');
+$('#renameBtn').onclick=()=>{let n=prompt('Choose a profile name',profile);if(n&&n.trim()){profile=n.trim().slice(0,22);localStorage.setItem('nx_name',profile);updateName()}};
+function updateName(){$('#who').textContent=profile||'PROFILE';$('#profileLabel').textContent=profile||'Not set'}
+$('#clearBtn').onclick=async()=>{if(confirm('Delete all locally added titles, saved items and watch history?')){for(let x of items.filter(x=>x.videoKey))await delVideo(x.videoKey);items=seed.map((x,i)=>({...x,id:'seed'+i}));saved.clear();history=[];persist();render();alert('Your personal additions were cleared.')}};$('#startBtn').onclick=()=>{profile=$('#nameInput').value.trim()||'Viewer';localStorage.setItem('nx_name',profile);$('#welcomeModal').classList.remove('show');updateName()};
+load();render();updateName();if(!profile)$('#welcomeModal').classList.add('show');
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
+</script>
+</body></html>
